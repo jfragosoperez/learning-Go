@@ -1,0 +1,1 @@
+Learning about the Go progr. language basics. Some of the examples (all the ones located into samples folder) are taken from the reads in Go lang. official webpage -> https://golang.org/doc/code.html 
