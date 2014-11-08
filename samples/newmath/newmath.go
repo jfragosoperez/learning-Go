@@ -1,7 +1,7 @@
 //trivial example of a go library
 package newmath
 
-//Aprox. to the root square of x
+//Aprox. to the root square of x (Newton's method)
 func Sqrt(x float64) float64 {
 	z := 1.0
 	for i := 0; i < 1000; i++ {
