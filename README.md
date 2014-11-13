@@ -24,6 +24,8 @@ Learning the basics in Go progr. languageg. Some of the examples (all the ones l
 		*int64
 		
 		*Machine dependent -> their size is dependent on the type of architecture of the machine -> uint, int, uintptr 
+
+		*Go allows to increment/decrement by a unit using the operator ++/--. The language also enables to increment/decrement using the operator +=/-= .
 	
 
 	-Float:
@@ -68,7 +70,7 @@ Some operations:
 
 -Declaration and assignation:
 
-	* var $NAME $TYPE -> Examples: 
+	* 	var $NAME $TYPE -> Examples: 
 
 		var x string = "Hello"
 
@@ -99,3 +101,11 @@ Some operations:
 
 ***** CONTROL STRUCTURES **************		 	
 
+-For
+
+	*Example:
+
+	```python
+	for i:=1; i <= 10; i++ {
+		//stuff inside the loop
+	}``
