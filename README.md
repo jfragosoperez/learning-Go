@@ -105,8 +105,8 @@ Some operations:
 
 	*Example:
 
-	```python
+	
 	for i:=1; i <= 10; i++ {
 		//stuff inside the loop
 	}
-	```
+	
