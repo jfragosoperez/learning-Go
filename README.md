@@ -1,7 +1,15 @@
 Learning the basics in Go progr. languageg. Some of the examples (all the ones located into samples folder) are taken from the reads in Go lang. official webpage -> https://golang.org/doc/code.html 
 
+Other from the book:
 
-************* TYPES *******************
+"An introduction to programming in GO"
+
+Caleb Doxsey
+
+2012
+
+
+********BASIC TYPES *******************
 
 -- NUMBERS --
 
@@ -66,6 +74,16 @@ Some operations:
 	* !	
 
 
+
+********OTHER TYPES *******************	
+
+-- Arrays --
+
+	* var integerArray [10]int
+
+	* x := [5]float64{ 2, 5, 3, 1}
+
+
 ************* VARS ********************
 
 -Declaration and assignation:
@@ -101,7 +119,7 @@ Some operations:
 
 ***** CONTROL STRUCTURES **************		 	
 
--For
+-- For --
 
 	*Example:
 
@@ -110,3 +128,28 @@ Some operations:
 		//stuff inside the loop
 	}
 	
+
+-- If --
+	
+	*Example:
+
+	if i % 2 == 0 {
+		// even
+	} else if i % 3 == 0 {
+		// divisible by 3
+	} else if i % 4 == 0 {
+		// divisible by 4
+	}
+
+
+-- Switch --
+
+	*Example:
+
+	switch i {
+		case 0: fm.Println("Zero")
+		case 1: fm.Println("One")
+		default: fm.Println("Unknown")
+	}	
+
+
