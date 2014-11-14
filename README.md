@@ -473,7 +473,7 @@ Example:
 	}
 
 	Example of call -> totalArea(&c, &r) //calculating the total area of the sum of the area of a 
-										//circle and of a rectangle
+										 //circle and of a rectangle
 
 Interfaces can also be used as fields. Example:
 
@@ -519,9 +519,9 @@ Example:
 		}
     	var input string
     	fmt.Scanln(&input) //forcing the program to not exit, because we are calling subroutines. 
-    	//Else the program would exit without waiting for the subroutines to finish. We can stop if 
-
-    	//we hit alghough any subroutine is being executed at the time we hit the inter.
+    					   //Else the program would exit without waiting for the subroutines to finish. 
+    					   //We can stop if we hit alghough any subroutine is being executed at 
+    					   //the time we hit the inter.
 	}
 
 
@@ -561,7 +561,7 @@ Example:
 	}
 	func main() {
 	     var c chan string = make(chan string)  //creating the channel declaring that the messages 
-	     //that will communicate it, will be strings
+	     										//that will communicate it, will be strings
 
 	     go pinger(c)  // first sender subroutine
 	     go ponger(c)  // second sender subroutine
@@ -608,7 +608,7 @@ Example: This program prints "from 1" every 2 seconds and "from 2" every 3 secon
 	                case msg2 := <- c2:
 	                    fmt.Println(msg2)
 	                case <- time.After(time.Second): //time.After creates a channel and after the 
-	                //given duration will send the current time on it.
+	                								 //given duration will send the current time on it.
      					fmt.Println("timeout") 
      				default: //happens immediately if none of the channels are ready
      					fmt.Println("nothing ready")	
