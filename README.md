@@ -100,7 +100,8 @@ Some operations:
 		x := make([]float64, 5, 10)
 
 		arr := []float64{1,2,3,4,5}
-		  x := arr[0:4] // this will assign to x values [1,2,3,4] because the high index is not included
+		x := arr[0:4] // this will assign to x values [1,2,3,4] because the high index is not
+					  //included
 
 	Built-in functions:
 
@@ -156,7 +157,8 @@ Some operations:
 	
 	IMPORTANT!!!
 	
-	- In go, if we try to search for a key that is not into the map, it returns the zero value for its value type. For example, if value is a String it will return "", or if values are integers will return 0.  
+	- In go, if we try to search for a key that is not into the map, it returns the zero value 
+	for its value type. For example, if value is a String it will return "", or if values are integers will return 0.  
 
 	- Go can return several elements, if we do:
 
@@ -189,7 +191,8 @@ Some operations:
 
 	y := 5
 
-	-No needed to add keyword var" and the type. Go compiler is able to infer the type based on the literal value you assign the variable. 
+	-No needed to add keyword var" and the type. Go compiler is able to infer the type based on 
+	the literal value you assign the variable. 
 
 	-Use this form whenever possible
 
@@ -267,7 +270,8 @@ Some operations:
 
 		currentBalance := ... //incrementing or decrementing the current balance of the account
 
-		//informing that the transaction has been performed successfully and returning the current balance
+		//informing that the transaction has been performed successfully and returning 
+		the current balance
 		return true, currentBalance
 	}
 
@@ -315,7 +319,11 @@ Example:
 		defer f.Close()
 		//work with the file
 
-	This will make to close the file at the very end of the function in which this code sequence is called. By this way, we can have the opening of the file and its closing very closely, so we do not forget to close the file, and we can work with the file without worring about closing the file at the end.
+	This will make to close the file at the very end of the function in which this code sequence is called. 
+
+	By this way, we can have the opening of the file and its closing very closely, so we do not forget 
+
+	to close the file, and we can work with the file without worring about closing the file at the end.
 	
 
 -Panic and Recover	
@@ -376,12 +384,14 @@ Example:
 
 Examples:
 
-	var c Circle    //creates a new instance and puts all its fields to 0.0 as all of them belong to the float type.
+	var c Circle    //creates a new instance and puts all its fields to 0.0 as all of them belong 
+					//to the float type.
 
 	c := Circle{x: 0, y: 0, r: 5}
 	c := Circle{0, 0, 5}
 
-	c := new(Circle)  //allocating memory for all the fields, sets each of them to its 0 state and returning a pointer.
+	c := new(Circle)  //allocating memory for all the fields, sets each of them to its 0 state 
+					  //and returning a pointer.
 
 
 IMPORTANT!!! -> remember that in Go, arguments of a function are always copied, if we want to modify fields of the object inside a function, we need to work with pointers.
@@ -462,7 +472,8 @@ Example:
 		return area
 	}
 
-	Example of call -> totalArea(&c, &r) //calculating the total area of the sum of the area of a circle and of a rectangle
+	Example of call -> totalArea(&c, &r) //calculating the total area of the sum of the area of a 
+										//circle and of a rectangle
 
 Interfaces can also be used as fields. Example:
 
@@ -508,7 +519,9 @@ Example:
 		}
     	var input string
     	fmt.Scanln(&input) //forcing the program to not exit, because we are calling subroutines. 
-    	//Else the program would exit without waiting for the subroutines to finish. We can stop if we hit alghough any subroutine is being executed at the time we hit the inter.
+    	//Else the program would exit without waiting for the subroutines to finish. We can stop if 
+
+    	//we hit alghough any subroutine is being executed at the time we hit the inter.
 	}
 
 
@@ -547,7 +560,8 @@ Example:
 	     }
 	}
 	func main() {
-	     var c chan string = make(chan string)  //creating the channel declaring that the messages that will communicate it, will be strings
+	     var c chan string = make(chan string)  //creating the channel declaring that the messages 
+	     //that will communicate it, will be strings
 
 	     go pinger(c)  // first sender subroutine
 	     go ponger(c)  // second sender subroutine
@@ -593,7 +607,8 @@ Example: This program prints "from 1" every 2 seconds and "from 2" every 3 secon
 	                    fmt.Println(msg1)
 	                case msg2 := <- c2:
 	                    fmt.Println(msg2)
-	                case <- time.After(time.Second): //time.After creates a channel and after the given duration will send the current time on it.
+	                case <- time.After(time.Second): //time.After creates a channel and after the 
+	                //given duration will send the current time on it.
      					fmt.Println("timeout") 
      				default: //happens immediately if none of the channels are ready
      					fmt.Println("nothing ready")	
