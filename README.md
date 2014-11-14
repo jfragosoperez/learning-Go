@@ -14,21 +14,21 @@ Caleb Doxsey
 
 	-Integer:
 
-		*uint8 -> same as byte
+		uint8 -> same as byte
 
-		*uint16
+		uint16
 		
-		*uint32
+		uint32
 		
-		*uint64
+		uint64
 		
-		*int8 
+		int8 
 		
-		*int16
+		int16
 		
-		*int32 -> same as rune
+		int32 -> same as rune
 		
-		*int64
+		int64
 		
 		*Machine dependent -> their size is dependent on the type of architecture of the machine -> uint, int, uintptr 
 
@@ -37,27 +37,27 @@ Caleb Doxsey
 
 	-Float:
 
-		*float32 -> single precision
+		float32 -> single precision
 	
-		*float64 -> double precision
+		float64 -> double precision
 	
 
 	-Complex:
 	
-		*complex64
+		complex64
 	
-		*complex128	
+		complex128	
 
 
 **STRINGS**
 
 Some operations:
 
-	*Length -> len("Hello world")
+	Length -> len("Hello world")
 
-	*Char. accessing -> "Hello World"[1] -> returns 101 instead of e as a character is represented as a byte.  
+	Char. accessing -> "Hello World"[1] -> returns 101 instead of e as a character is represented as a byte.  
 
-	*Concatenation -> "Hello " + " world!"	
+	Concatenation -> "Hello " + " world!"	
 
 
 **BOOLEANS**	
@@ -66,11 +66,11 @@ Some operations:
 
 -Operations:
 
-	* &&
+	&&
 
-	* ||
+	||
 
-	* !	
+	!	
 
 
 
@@ -78,9 +78,9 @@ Some operations:
 
 **Arrays**
 
-	* var integerArray [10]int
+	var integerArray [10]int
 
-	* x := [5]float64{ 2, 5, 3, 1}
+	x := [5]float64{ 2, 5, 3, 1}
 
 
 **Slices**	
@@ -91,15 +91,15 @@ Some operations:
 
 		//slice associated with an underlying
 		//float64 array of length 5
-		* x := make([]float64, 5)
+		x := make([]float64, 5)
 
 		//slice associated with an underlying
 		//float64 array of length 5,
 		//where 10 is the capacity of the underlying
 		//array which the slice points to
-		* x := make([]float64, 5, 10)
+		x := make([]float64, 5, 10)
 
-		* arr := []float64{1,2,3,4,5}
+		arr := []float64{1,2,3,4,5}
 		  x := arr[0:4] // this will assign to x values [1,2,3,4] because the high index is not included
 
 	Built-in functions:
@@ -177,26 +177,26 @@ Some operations:
 
 -Declaration and assignation:
 
-	* 	var $NAME $TYPE -> Examples: 
+	var $NAME $TYPE -> Examples: 
 
-		var x string = "Hello"
+	var x string = "Hello"
 
-		var y string
+	var y string
 
-		y = "What's up?"
+	y = "What's up?"
 	
-	* 	x := "Hello world"
+	x := "Hello world"
 
-		y := 5
+	y := 5
 
-		-No needed to add keyword var" and the type. Go compiler is able to infer the type based on the literal value you assign the variable. 
+	-No needed to add keyword var" and the type. Go compiler is able to infer the type based on the literal value you assign the variable. 
 
-		-Use this form whenever possible
+	-Use this form whenever possible
 
 
 -Constants:
 
-	* const x String = "Hello world"
+	const x String = "Hello world"
 
 
 -Definition of multiple var/consts -> Use keyword var/const and put the vars inside parentheses with each variable on its own line. Example:
