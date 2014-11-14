@@ -970,5 +970,5 @@ Appart from goroutines and channels, Go does provide more traditional multithrea
 **Go Source code for all the packages**
 http://golang.org/src/pkg/	
 
-**Go community
+**Go community**
 https://groups.google.com/forum/#!forum/golang-nuts
