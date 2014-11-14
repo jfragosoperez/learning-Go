@@ -262,18 +262,18 @@ Some operations:
 
 -Multiple returning values: Go allows to return multiple values from a function
 
-func performTransaction(...) (boolean, float64) {
-	// all the stuff related to performing the transaction
+	func performTransaction(...) (boolean, float64) {
+		// all the stuff related to performing the transaction
 
-	currentBalance := ... //incrementing or decrementing the current balance of the account
+		currentBalance := ... //incrementing or decrementing the current balance of the account
 
-	//informing that the transaction has been performed successfully and returning the current balance
-	return true, currentBalance
-}
+		//informing that the transaction has been performed successfully and returning the current balance
+		return true, currentBalance
+	}
 
-func main() {
-	transactionOk, accountBalance := performTransaction(...)
-}
+	func main() {
+		transactionOk, accountBalance := performTransaction(...)
+	}
 
 
 -Variadic functions: by using "..." before the type name of the last parameter we are indicating that this functions takes 0 to more of these parameters
@@ -609,7 +609,7 @@ Example: This program prints "from 1" every 2 seconds and "from 2" every 3 secon
 
 It's also possible to pass a second parameter to the make function when creating a channel:
 
-c := make(chan int, 1)  //creates a buffered channel with capacity 1. 
+	c := make(chan int, 1)  //creates a buffered channel with capacity 1. 
 
 Normally channels are synchronous; both sizes of the channel will wait until the other side is ready. A buffered channel is asynchronous; sending or receiving a message will not wait unless the channel is already full.
 
