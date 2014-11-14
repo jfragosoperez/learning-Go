@@ -6,6 +6,7 @@ The basic doc we can find in this README.md file, is based on the contents of th
 Caleb Doxsey
 2012
 
+NOTE: The docs folder, contains a pdf version of a latex document that contains the whole information described next. I am saying this just in case you prefer to download and read the .pdf file, which is in a more friendly readable format.
 
 
 ## BASIC TYPES 
