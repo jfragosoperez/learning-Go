@@ -3,10 +3,9 @@ Learning the basics in Go progr. languageg. Some of the examples (all the ones l
 Other from the book:
 
 "An introduction to programming in GO"
-
 Caleb Doxsey
-
 2012
+
 
 
 ********BASIC TYPES *******************
@@ -84,6 +83,96 @@ Some operations:
 	* x := [5]float64{ 2, 5, 3, 1}
 
 
+-- Slices --	
+
+	Are like arrays, but their size is allowed to change.
+
+	Examples:
+
+		//slice associated with an underlying
+		//float64 array of length 5
+		* x := make([]float64, 5)
+
+		//slice associated with an underlying
+		//float64 array of length 5,
+		//where 10 is the capacity of the underlying
+		//array which the slice points to
+		* x := make([]float64, 5, 10)
+
+		* arr := []float64{1,2,3,4,5}
+		  x := arr[0:4] // this will assign to x values [1,2,3,4] because the high index is not included
+
+	Built-in functions:
+
+		-APPEND -> creates new slice by taking an existing slice
+
+		slice1 := []int{1,2,3}
+     	slice2 := append(slice1, 4, 5)	
+
+     	//RESULT:
+     	// slice 1 value is [1,2,3]
+     	// slice 2 value is [1,2,3,4,5]
+
+
+     	-COPY 
+
+     	slice1 := []int{1,2,3}
+	    slice2 := make([]int, 2)
+	    copy(slice2, slice1)
+
+	    //RESULT:
+	    // slice 2 now will have values [1,2] because slice2 has room for only two elements
+
+
+-- Maps --	
+
+	Examples:
+
+		*Assigning:
+
+			x := make(map[string]int)
+			x["key"] = 10
+
+			elements := map[string]string{
+			    "H": "Hydrogen",
+			    "He": "Helium",
+			    "Li": "Lithium",
+			    "Be": "Beryllium",
+			    "B": "Boron",
+			    "C": "Carbon",
+			    "N": "Nitrogen",
+			    "O": "Oxygen",
+			    "F": "Fluorine",
+			    "Ne": "Neon",
+			}
+
+
+		*Accessing:
+
+			x["key"]
+
+	Delete op. ->	delete(x, 1)	
+
+	
+	IMPORTANT!!!
+	
+	- In go, if we try to search for a key that is not into the map, it returns the zero value for its value type. For example, if value is a String it will return "", or if values are integers will return 0.  
+
+	- Go can return several elements, if we do:
+
+		elements := make(map[string]string)
+		name, ok := elements["Hello"]	
+
+	  then name contains the result of the lookup, and ok informs if the lookup was successful.
+
+	  Thus, Go allows to do things like:
+
+	  	if name, ok := elements["Un"]; ok {
+	  		//if lookup was successful
+	    	fmt.Println(name, ok)
+		}
+
+
 ************* VARS ********************
 
 -Declaration and assignation:
@@ -122,11 +211,27 @@ Some operations:
 -- For --
 
 	*Example:
-
 	
 	for i:=1; i <= 10; i++ {
 		//stuff inside the loop
 	}
+
+
+	*Example 2:
+
+	x := [5]float64{
+	    98,
+	    93,
+	    77,
+	    82,
+	    83,
+	}
+
+	var total float64 = 0
+	for _, value := range x {
+    	total += value
+	}
+	fmt.Println(total / float64(len(x)))
 	
 
 -- If --
