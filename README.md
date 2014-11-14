@@ -520,7 +520,7 @@ Example:
     	var input string
     	fmt.Scanln(&input) //forcing the program to not exit, because we are calling subroutines. 
     					   //Else the program would exit without waiting for the subroutines to finish. 
-    					   //We can stop if we hit alghough any subroutine is being executed at 
+    					   //We can stop if we hit although any subroutine is being executed at 
     					   //the time we hit the inter.
 	}
 
