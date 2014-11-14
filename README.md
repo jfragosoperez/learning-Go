@@ -630,3 +630,345 @@ Normally channels are synchronous; both sizes of the channel will wait until the
 
 
 ## PACKAGES
+
+-Go was designed to be a language that encourages good software engineering practices and one of them is code reuse ("Don't Repeat Yourself.")
+
+-Improve code organization, to find quickly the code we want to reuse.
+
+-In Go if something starts with a capital letter means other packages (and programs) are able to see it. If we had named a function with first letter as lowercase instead of uppercase, this functions won't be accessible from outside. It's a good practice to only expose the parts of our package that we want other packages using and hide everything else. 
+
+-Package names match the folders they fall in. There are ways around this, but it's a lot easier if you stay within this pattern.
+
+
+**Documentation**
+
+Go has the ability to autmoatically generate doc. for packages we write in a similar way to the standard package documentation.
+
+-To generate it, in a terminal run:
+
+	godoc $packageName $functionName
+
+	(where $packageName and $functionName are the names for the package and the function respectively)
+
+-Then doc will be also avilable in web form by running:
+	
+	godoc -http=":6060"
+
+	Then in the browser: http://localhost:6060/pkg/   we will be able to browse through all the packages installed in our system.
+
+
+## TESTING	
+
+-Create tests is really easy in Go. 
+
+Example:
+	
+If we created a math package which contains a function to calculate the average, we can create a test for it creating a file, let's say math_test.go in the math folder, and adding this code:
+
+	package math
+
+	import "testing"
+
+	func TestAverage(t *testing.T) {
+	    var v float64
+	    v = Average([]float64{1,2})
+	    if v != 1.5 {
+	           t.Error("Expected 1.5, got ", v)
+	    }
+	}
+
+After that, running the command "go test" (inside the math folder, of course) the command will look for any tests in any of the files in the current folder and run them.
+Tests are identified by starting a function with the word Test and taking one argument of type "*testing.T".
+
+
+## THE CORE PACKAGES
+
+**Bytes**
+
+package name -> bytes
+
+-Contains the Buffer struct. A buffer does not need to be initialized and supports Reader and Writer interfaces. A buffer can be converted into a []byte by calling buf.Bytes().
+
+**Strings**
+
+package name -> strings
+
+Examples:
+
+	// true
+	strings.Contains("test", "es"),
+	// 2
+	strings.Count("test", "t"),
+	// true
+	strings.HasPrefix("test", "te"),
+	// true
+	strings.HasSuffix("test", "st"),
+	// 1
+	strings.Index("test", "e"),
+	// "a-b"
+	strings.Join([]string{"a","b"}, "-"),
+	// == "aaaaa"
+	strings.Repeat("a", 5),
+	// "bbaa"
+	strings.Replace("aaaa", "a", "b", 2),
+	// []string{"a","b","c","d","e"}
+	strings.Split("a-b-c-d-e", "-"),
+	// "test"
+	strings.ToLower("TEST"),
+	// "TEST"
+	strings.ToUpper("test"),
+
+To convert string to a slice of bytes (and viceversa):
+	
+	arr := []byte("test")
+	str := string([]byte{'t','e','s','t'})
+
+
+**Input/Output**
+
+package name -> io
+
+Examples:
+
+	func Copy(dst Writer, src Reader) (written
+	int64, err error)
+
+	var buf bytes.Buffer
+	buf.Write([]byte("test"))	
+
+
+**Files and folders**
+
+package name -> os
+
+Example reading file contents and displaying them on the terminal:
+
+	package main
+	import (
+		"fmt"
+		"os"
+	)
+	
+	func main() {
+		file, err := os.Open("test.txt")
+		if err != nil {
+			// handle the error here
+			return 
+		}
+		defer file.Close()
+		
+		// get the file size
+		stat, err := file.Stat()
+		if err != nil {
+			return 
+		}
+		
+		// read the file
+		bs := make([]byte, stat.Size())
+		_, err = file.Read(bs)
+		if err != nil {
+			return 
+		}
+		
+		str := string(bs)
+		fmt.Println(str)
+	}
+
+Reading files is very common. Shorter way:
+
+	package main
+	
+	import (
+	     "fmt"
+	     "io/ioutil"
+	)
+
+	func main() {
+	    bs, err := ioutil.ReadFile("test.txt")
+	    if err != nil {
+			return 
+		}
+	    str := string(bs)
+	    fmt.Println(str)
+	}	
+
+Create file:
+
+	file, err := os.Create("test.txt")
+    if err != nil {
+        // handle the error here
+		return 
+	}
+    defer file.Close()
+    
+    file.WriteString("test")	
+
+
+To get the contents of a directory we use the same os.Open function but giving a directory path instead a file name. Then we call the Readdir method. Example:
+
+	dir, err := os.Open(".")
+    if err != nil {
+		return 
+	}
+    defer dir.Close()
+    fileInfos, err := dir.Readdir(-1)
+    if err != nil {
+		return 
+	}
+    for _, fi := range fileInfos {
+           fmt.Println(fi.Name())
+	}
+
+To recursively walk a folder, there's a Walk function in package "path/filepath". Example of usage:
+	
+	filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+        fmt.Println(path)
+		return nil 
+	})
+
+	The function passed to Walk is called for every file and folder in the root folder (in this case ".")	
+
+
+**Errors**
+
+package name -> errors
+
+	err := errors.New("This is an error message")	
+
+
+**Containers and Sort**	
+
+-List -> package name -> container/list -> implementation of a doubly-linked list
+
+-Sort -> package name -> sort -> Functions for sorting arbitrary data. There are serveral predefined sorting functions (for slices of ints and floats)
+
+The Sort function in sort takes a sort.Interface and sorts it. A sort.Interface requires 3 methods: Len, Less and Swap.
+Example of usage:
+
+	package main
+
+	import ("fmt" ; "sort")
+
+	type Person struct {
+	    Name string
+		Age int 
+	}
+	
+	type ByName []Person
+	
+	func (this ByName) Len() int {
+	    return len(this)
+	}
+	func (this ByName) Less(i, j int) bool {
+	    return this[i].Name < this[j].Name
+	}
+	func (this ByName) Swap(i, j int) {
+	    this[i], this[j] = this[j], this[i]
+	}
+	func main() {
+	     kids := []Person{
+				{"Jill",9},
+	            {"Jack",10},
+	     }
+	     sort.Sort(ByName(kids))
+	     fmt.Println(kids)
+	}
+
+
+**Hashes and Cryptography**
+
+Just to remember that a hash function takes a set of data and reduces it to a smaller fixed size. Hash functions in Go are broken into two categories: cryptographic and non-cryptographic.
+
+Cryptographic hash functions are similar to their non-cryptographic counterparts, but they have the added property of being hard to reverse. Give the cryptographic hash of a set of data, it's extremely difficult to determine what made the hash. These kind of hashes are often used in security applications (one common cryptographic hash function is SHA-1). Example of usage:
+
+	import (
+	    "fmt"
+	    "crypto/sha1"
+	)
+
+	func main() {
+		h := sha1.New()
+		h.Write([]byte("test"))
+		bs := h.Sum([]byte{})
+		fmt.Println(bs)
+	}
+
+	//sha1 computes a 160 bit hash. There is no native type to 
+	//represent a 160 bit number, so we use a slice of 20 bytes instead.
+
+
+**Servers**
+
+-Encodings needed are in package "encoding/"+ name, for example encoding/json
+
+Example of HTTP server setup and use:	
+
+	package main
+
+	import ("net/http" ; "io")
+
+	func hello(res http.ResponseWriter, req *http.Request) {
+	     res.Header().Set(
+	           "Content-Type",
+	           "text/html",
+	     )
+	     io.WriteString(
+	           res,
+	           `<doctype html>
+	<html>
+	     <head>
+	           <title>Hello World</title>
+	     </head>
+	     <body>
+	           Hello World!
+	     </body>
+	</html>`,
+		) 
+	}
+	func main() {
+	    http.HandleFunc("/hello", hello)  //handles a URL route (/hello) by calling the given func.
+	    http.ListenAndServe(":9000", nil)
+	}
+
+To handle static files we can use FileServer:
+
+	http.Handle(
+	    "/assets/",
+	    http.StripPrefix(
+	          "/assets/",
+	          http.FileServer(http.Dir("assets")),
+	    ),
+	)
+
+
+**Parsing Command Line Arguments**
+
+The flag package allows us to parse arguments and flags sent to our program. Example:
+
+	package main
+	
+	import ("fmt";"flag";"math/rand")
+	
+	func main() {
+	    // Define flags
+	    maxp := flag.Int("max", 6, "the max value")
+	    // Parse
+	    flag.Parse()
+	    // Generate a number between 0 and max
+	    fmt.Println(rand.Intn(*maxp))
+	}	
+
+
+**Synchronization Primitives**
+
+Appart from goroutines and channels, Go does provide more traditional multithreading routines in the "sync" and "sync/atomic" packages. Includes for example, mutexes.
+
+
+
+## OTHER
+
+**Go Source code for all the packages**
+http://golang.org/src/pkg/	
+
+**Go community
+https://groups.google.com/forum/#!forum/golang-nuts
