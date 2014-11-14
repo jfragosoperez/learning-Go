@@ -2,3 +2,6 @@
 *.dvi
 *.aux
 *.log
+*.toc
+*.blg
+*.report.bbl
