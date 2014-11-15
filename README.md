@@ -15,7 +15,7 @@ https://groups.google.com/forum/#!forum/golang-nuts
 
 ## Basics of Go
 
-Next, you will find a short resume about the basics of Go. Moreover, I wrote a little report, so if you prefer, you can download it here: [Go basics document](https://github.com/jfragosoperez/learning-Go/blob/master/docs/basic_doc.pdf)
+Next, you will find a short resume about the basics of Go. Moreover, I wrote a little report, which is in a more friendly readable format. I am sharing it so you can download it if you want: [Go basics document](https://github.com/jfragosoperez/learning-Go/blob/master/docs/basic_doc.pdf)
 
 ## BASIC TYPES 
 
