@@ -15,6 +15,6 @@ https://groups.google.com/forum/#!forum/golang-nuts
 
 ## Document
 
-Go basics.
+Go basics document.
 
-![Report](docs/basic_doc.pdf)
+[Report](https://github.com/jfragosoperez/learning-Go/blob/master/docs/basic_doc.pdf)
