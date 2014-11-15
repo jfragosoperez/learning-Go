@@ -1,0 +1,148 @@
+\documentclass[twoside,a4paper,english]{report}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{amsmath}
+%\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+
+\usepackage{afterpage}
+
+\titleformat{\chapter}[hang]{\bfseries\huge}{\thechapter.}{2pc}{}
+\titlelabel{\thetitle.\quad}   % For consistency in all headings
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+%\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+\title{An Introduction To Programming In Go}
+\author{Fragoso Pérez, Jonathan}
+
+\date{\today}
+
+\definecolor{my_blue}{HTML}{0066FF}
+\definecolor{my_green}{HTML}{33CC33}
+\definecolor{my_gray}{HTML}{669966}
+
+\lstnewenvironment{go}
+  {\lstset{language=Go,breaklines=true, frame=lines, commentstyle=\color{my_gray}}}
+  {}
+
+\begin{document}
+\renewcommand{\abstractname}{Abstract}
+
+\maketitle
+
+\begin{abstract}
+Describing the basics of the Go programming language. This document is more like a resume, a quick reference to everyone that has programmed for some time and wants to introduce fastly to this language, without reading many links to the docs or a book.
+Some of the information/examples is directly copied from the book \cite{doxsey2012introduction}.
+\end{abstract}
+
+%\tableofcontents
+
+\newpage
+\chapter{Introduction}
+\emph{Why Go? } 
+
+\chapter{Basic Types}
+\section{Numbers}
+\begin{itemize}
+\item Integer
+\begin{itemize}
+\item uint8 $\rightarrow$ same as byte
+\item uint32	
+\item uint64
+\item int8 
+\item int16
+\item int32 $\rightarrow$ same as rune
+\item int64
+\end{itemize}
+Machine dependent $\rightarrow$ their size is dependent on the type of architecture of the machine -> uint, int, uintptr \\\\
+Go allows to increment/decrement by a unit using the operator ++/--. The language also enables to increment/decrement using the operator +=/-= .
+\item Float
+\begin{itemize}
+\item float32 $\rightarrow$ single precision
+\item float64 $\rightarrow$ double precision
+\end{itemize}
+\item Complex
+\begin{itemize}
+\item complex64
+\item complex128
+\end{itemize}
+\end{itemize}
+\section{Strings}
+Some operations:
+\begin{itemize}
+\item Length $\rightarrow$ len("Hello world")
+\item Char. accessing -> "Hello World"[1] $\rightarrow$ returns 101 instead of e as a character is represented as a byte.  
+\item Concatenation $\rightarrow$ "Hello " + " world!"	
+\end{itemize}
+\section{Booleans}
+1 bit integer representing true or false.\\\\
+Operations:
+\begin{itemize}
+\item \&\&
+\item ||
+\item !
+\end{itemize}
+\chapter{Other Types}
+\section{Arrays}
+\begin{go}
+var integerArray [10]int
+
+x := [5]float64{ 2, 5, 3, 1}
+\end{go}
+\section{Slices}
+Are like arrays, but their size is allowed to change.\\
+% {\color{my_blue}Example:}\\
+\begin{go}
+//slice associated with an underlying
+//float64 array of length 5
+x := make([]float64, 5)
+
+//slice associated with an underlying
+//float64 array of length 5,
+//where 10 is the capacity of the underlying
+//array which the slice points to
+x := make([]float64, 5, 10)
+
+arr := []float64{1,2,3,4,5}
+x := arr[0:4] // this will assign to x values [1,2,3,4] because the high 
+              // index is not included
+\end{go}
+Built-in functions:\\
+\begin{itemize}
+\item Append $\rightarrow$ creates a new slice by taking an existing one.
+\begin{go}
+slice1 := []int{1,2,3}
+slice2 := append(slice1, 4, 5)  
+
+// RESULT:
+// slice 1 value is [1,2,3]
+// slice 2 value is [1,2,3,4,5]
+\end{go} 
+\item Copy
+\begin{go}
+slice1 := []int{1,2,3}
+slice2 := make([]int, 2)
+copy(slice2, slice1)
+
+// RESULT:
+// slice 2 now will have values [1,2] because slice2 has room for only two elements
+\end{go}
+\end{itemize}
+\newpage
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}
+
+
