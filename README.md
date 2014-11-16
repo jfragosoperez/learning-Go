@@ -14,6 +14,43 @@ http://golang.org/src/pkg/
 **Go community**
 https://groups.google.com/forum/#!forum/golang-nuts
 
+##Commands
+
+**PATH**
+	export GOPATH=path_to_the_workspace
+
+	export PATH=$PATH:$GOPATH/bin
+
+**BUILD**
+
+	go build project_name
+
+**TESTS**
+	
+	go test project_name
+
+**LIST**
+
+These list is copied from: https://golang.org/cmd/go/ 
+
+	build       compile packages and dependencies
+	clean       remove object files
+	env         print Go environment information
+	fix         run go tool fix on packages
+	fmt         run gofmt on package sources
+	get         download and install packages and dependencies
+	install     compile and install packages and dependencies
+	list        list packages
+	run         compile and run Go program
+	test        test packages
+	tool        run specified go tool
+	version     print Go version
+	vet         run go tool vet on packages	
+
+**HELP**
+
+	go help [command]	
+
 
 ## Basics of Go
 
