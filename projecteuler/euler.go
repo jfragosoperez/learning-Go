@@ -5,8 +5,8 @@ import "errors"
 
 //Calculates the sum of all the numbers we get
 //from finding the multiples given a multiplesOf list and
-//the limit upTo which is the bound to search the multiples
-//from each multiple number in the list.
+//the limit upTo which is the upper bound. Thus the multiple
+//search will find values in the set [multiplesOf[i], upTo]
 func SumMultiples(multiplesOf []int, upTo int)(sum int, err error) {
 	multiplesSum := 0
 	if multiplesOf == nil {
