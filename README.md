@@ -1,5 +1,7 @@
 Learning the basics in Go progr. language. Some of the examples (all the ones located into samples folder) are taken from the reads in Go lang. official webpage -> https://golang.org/doc/code.html 
 
+The basic doc we can find in this README.md file and in the report doc. is based on the contents of the book:
+
 "An introduction to programming in GO"
 Caleb Doxsey
 2012

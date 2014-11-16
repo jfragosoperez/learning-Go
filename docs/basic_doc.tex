@@ -34,7 +34,7 @@
 \definecolor{my_gray}{HTML}{669966}
 
 \lstnewenvironment{go}
-  {\lstset{language=Go,breaklines=true, frame=lines, commentstyle=\color{my_gray}}}
+  {\lstset{language=Go,breaklines=true, frame=lines, showstringspaces=false, commentstyle=\color{my_gray}}}
   {}
 
 \begin{document}
@@ -47,11 +47,28 @@ This document, describes the basics in Go programming language. The aims of this
 \emph{Note: Some of the information and examples have been directly copied from the book \cite{doxsey2012introduction}.}
 \end{abstract}
 
-%\tableofcontents
+\tableofcontents
 
 \newpage
 \chapter{Introduction}
-\emph{Why Go? } 
+Why learning Go? ``Go was born out of frustration with existing languages and environments for systems programming."\cite{gofaq}\\\\
+\textbf{Authors} $\rightarrow$ Go, also commonly referred to as golang, is a programming language initially developed at Google in 2007 by Robert Griesemer, Rob Pike, and Ken Thompson.\\\\
+Advantages:
+\begin{itemize}
+\item Compiles to machine code and it is possible to compile a large Go program very quickly in a single computer.
+\item No hierachy $\rightarrow$ No time is spent defining the relationships between types.
+\item Garbage-collected.
+\item cgo program $\rightarrow$ Allows calling C libraries from Go code. SWIG extends this capability to C++ libraries.
+\item Easy to learn, write, mantain and scale.
+\item Supports concurrency at the language level. Concurrency is based on Hoare's Communicating Sequential Processes (CSP), the communication between processes is handled with messaging like Erlang. 
+\item Open Source project.
+\end{itemize}
+Disadvantages:
+\begin{itemize}
+\item Is a relatively new language. It will need some time till more and more companies start to use it.
+\item Although there is a big community and a lot of packages, there are still some libraries you will miss, like a UI toolkit.
+\item No support for generics.
+\end{itemize}
 
 \chapter{Basic Types}
 \section{Numbers}
@@ -119,6 +136,7 @@ arr := []float64{1,2,3,4,5}
 x := arr[0:4] // this will assign to x values [1,2,3,4] because the high 
               // index is not included
 \end{go}
+\vspace{0.7cm}
 Built-in functions:\\
 \begin{itemize}
 \item Append $\rightarrow$ creates a new slice by taking an existing one.
@@ -178,6 +196,7 @@ delete(x,1)
 elements := make(map[string]string)
 name, ok := elements["Hello"]
 \end{go}
+\vspace{0.7cm}
 so in Go is usual to do things like:
 \begin{go}
 if name, ok := elements["Un"]; ok {
@@ -205,6 +224,7 @@ y := 5 //No needed to add keyword var" and the type. Go compiler is able to infe
        //the type based on the literal value you assign the variable. 
        //Use this form whenever possible
 \end{go}
+\vspace{0.7cm}
 Constants:
 \begin{go}
 const x String = "Hello world"
@@ -264,10 +284,12 @@ func main() {
   transactionOk, accountBalance := performTransaction(...)
 }
 \end{go}
+\vspace{0.7cm}
 \textbf{Variadic functions:} By using "..." before the type name of the last parameter we are indicating that this functions takes 0 to more of these parameters.
 \begin{go}
 func Println(a ...interface{}) (n int, err error)
 \end{go}
+\vspace{0.7cm}
 \textbf{Closure:} Go allows to create functions inside functions.
 \begin{go}
 func main() {
@@ -277,6 +299,7 @@ func main() {
   fmt.Println(sum(3+4))
 }
 \end{go}
+\vspace{0.7cm}
 \textbf{Recursion}
 \begin{go}
 func factorial(x uint) uint {
@@ -311,7 +334,7 @@ func main() {
 \end{go}
 \end{itemize}
 \chapter{Pointers}
-Pointers reference a location in memory where a values is stored rather than the value itself, by this way we are able to modify the original variable.\\\\
+Pointers reference a location in memory where a values is stored rather than the value itself, by this way we are able to modify the original variable.
 \begin{go}
 func zero(xPtr *int) {
   *xPtr = 0
@@ -322,6 +345,7 @@ func main() {
   fmt.Println(x) // x is 0
 }
 \end{go}
+\vspace{0.7cm}
 A pointer can also be created using the built-in new function. Example: xPtr := new(int).\\\\
 
 Because of being a garbage collected programming language, everything will be cleaned up automatically when nothing refers anymore.\\\\
@@ -335,7 +359,8 @@ type Circle struct {
   x, y, r float64
 }
 \end{go}
-Initialization $\rightarrow$ when it is a created a new instance of the type, it initializes to 0 state, which means all its fields are by default set to their 0 state, which becomes into for example 0 for ints, 0.0 for floats, "" for strings, nil for pointers, ...\\\\
+\vspace{0.7cm}
+Initialization $\rightarrow$ when it is a created a new instance of the type, it initializes to 0 state, which means all its fields are by default set to their 0 state, which becomes into for example 0 for ints, 0.0 for floats, "" for strings, nil for pointers, ...
 \begin{go}
 var c Circle    //creates a new instance and puts all its fields to 0.0 as all of them belong to the float type.
 
@@ -344,15 +369,16 @@ c := Circle{0, 0, 5}
 
 c := new(Circle)  //allocating memory for all the fields, sets each of them to its 0 state and returning a pointer.
 \end{go}
+\vspace{0.7cm}
 {\color{my_blue}IMPORTANT!!!}\\\\ 
-Remember that in Go, arguments of a function are always copied, if we want to modify fields of the object inside a function, we need to work with pointers.\\\\
+Remember that in Go, arguments of a function are always copied, if we want to modify fields of the object inside a function, we need to work with pointers.
 \begin{go}
 func circleArea(c *Circle) float64 {
     return math.Pi * c.r*c.r
 }
 \end{go}
 \section{Methods}
-If we add a "receiver" instead of passing the object as a parameter, we can call then the function using the '.' operator.\\\\
+If we add a "receiver" instead of passing the object as a parameter, we can call then the function using the '.' operator.
 \begin{go}
 type Rectangle struct {
   x1, y1, x2, y2 float64
@@ -369,7 +395,7 @@ main() will call:
 
 \end{go}    
 \section{Embedded Types}
-Struct fields usually represent the has-a relationship. Anonymous fields (embedded types) $\rightarrow$ type has a field that depends on another type.\\\\
+Struct fields usually represent the has-a relationship. Anonymous fields (embedded types) $\rightarrow$ type has a field that depends on another type.
 \begin{go}
 type Person struct {
   Name string
@@ -378,6 +404,7 @@ func (p *Person) Talk() {
   fmt.Println("Hi, my name is", p.Name)
 }
 \end{go}
+\vspace{0.7cm}
 And we want an Android type:
 \begin{go}
 type Android struct {
@@ -385,17 +412,19 @@ type Android struct {
   Model string
 }
 \end{go}
+\vspace{0.7cm}
 As we see we define the type and don't give it a name. Then we can call:
 \begin{go}
 a := new(Android)
 a.Person.Talk()
 \end{go}
+\vspace{0.7cm}
 or directly
 \begin{go}
 a.Talk()
 \end{go}
 \section{Interfaces}
-Like a struct, an interface is created using the type keyworkd, bollowed by a name and the keyword interface. Instead of defining fields, we define a "method set" which is the list of methods or behaviour that a type must have in order to "implement" the interface.\\\\
+Like a struct, an interface is created using the type keyworkd, bollowed by a name and the keyword interface. Instead of defining fields, we define a "method set" which is the list of methods or behaviour that a type must have in order to "implement" the interface.
 \begin{go}
 type Shape interface {
   area() float64
@@ -410,11 +439,13 @@ func totalArea(shapes ...Shape) float64 {
   return area
 }
 \end{go} 
+\vspace{0.7cm}
 Example of call:
 \begin{go} 
 totalArea(&c, &r) //calculating the total area of the sum of the area of a 
                   //circle and of a rectangle
-\end{go}                  
+\end{go}   
+\vspace{0.7cm}               
 Interfaces can also be used as fields.
 \begin{go}
 type MultiShape struct{
@@ -502,11 +533,13 @@ func main() {
 
   // this program prints "ping" and "pong" in turns till we hit the enter key.
 \end{go}
-A channel can be bi-directional, or we can specify a direction on a channel type. If the channel can only be sent to, attempting to receive from the channel will result in a compiler error.\\\\
+\vspace{0.7cm}
+A channel can be bi-directional, or we can specify a direction on a channel type. If the channel can only be sent to, attempting to receive from the channel will result in a compiler error.
 \begin{go}
 func pinger(c chan<- string) //the channel c can only be sent to SPECIAL SWITCH STATEMENT FOR MESSAGING: select
 \end{go}
-Example: This program prints "from 1" every 2 seconds and "from 2" every 3 seconds. select picks first channel that is ready and receives from it (or sends to it). If more than one are ready, then it randomly picks which one to receive from.\\\\
+\vspace{0.7cm}
+Example: This program prints "from 1" every 2 seconds and "from 2" every 3 seconds. select picks first channel that is ready and receives from it (or sends to it). If more than one are ready, then it randomly picks which one to receive from.
 \begin{go}
 func main() {
   c1 := make(chan string)
@@ -545,6 +578,7 @@ It is also possible to pass a second parameter to the make function when creatin
 \begin{go}
 c := make(chan int, 1)  //creates a buffered channel with capacity 1. 
 \end{go}
+\vspace{0.7cm}
 Normally channels are synchronous; both sizes of the channel will wait until the other side is ready. A buffered channel is asynchronous; sending or receiving a message will not wait unless the channel is already full.
 \chapter{Packages}
 \begin{itemize}
@@ -563,7 +597,7 @@ godoc -http=":6060"\\\\
 Then in the browser: http://localhost:6060/pkg/   we will be able to browse through all the packages installed in our system.
 \chapter{Testing}
 Creating tests is really easy in Go.\\\\
-If we created a math package which contains a function to calculate the average, we can create a test for it creating a file, let's say \verb|math_test.go| in the math folder, and adding this code:\\\\
+If we created a math package which contains a function to calculate the average, we can create a test for it creating a file, let's say \verb|math_test.go| in the math folder, and adding this code:
 \begin{go}
 package math
 
@@ -577,6 +611,7 @@ func TestAverage(t *testing.T) {
     }
 }
 \end{go}
+\vspace{0.7cm}
 After that, running the command "go test" (inside the math folder, of course) the command will look for any tests in any of the files in the current folder and run them. Tests are identified by starting a function with the word Test and taking one argument of type "*testing.T".
 
 \chapter{The core packages}
@@ -610,7 +645,8 @@ strings.ToLower("TEST"),
 strings.ToUpper("test"),
 
 \end{go}
-To convert string to a slice of bytes (and viceversa):\\\\
+\vspace{0.7cm}
+To convert string to a slice of bytes (and viceversa):
 \begin{go}
 arr := []byte("test")
 str := string([]byte{'t','e','s','t'})
@@ -659,7 +695,8 @@ func main() {
     fmt.Println(str)
 }
 \end{go}
-Reading files is very common. Shorter way:\\\\
+\vspace{0.7cm}
+Reading files is very common. Shorter way:
 \begin{go}
 package main
 
@@ -677,7 +714,8 @@ func main() {
     fmt.Println(str)
 }   
 \end{go}
-Create file:\\\\
+\vspace{0.7cm}
+Create file:
 \begin{go}
 file, err := os.Create("test.txt")
 if err != nil {
@@ -687,8 +725,9 @@ if err != nil {
 defer file.Close()
 
 file.WriteString("test")  
-\end{go}  
-To get the contents of a directory we use the same os.Open function but giving a directory path instead a file name. Then we call the Readdir method. \\\\
+\end{go} 
+\vspace{0.7cm} 
+To get the contents of a directory we use the same os.Open function but giving a directory path instead a file name. Then we call the Readdir method.
 \begin{go}
 dir, err := os.Open(".")
 if err != nil {
@@ -703,16 +742,18 @@ for _, fi := range fileInfos {
        fmt.Println(fi.Name())
 }
 \end{go}
-To recursively walk a folder, there's a Walk function in package "path/filepath". Example of usage:\\\\
+\vspace{0.7cm}
+To recursively walk a folder, there's a Walk function in package "path/filepath". Example of usage:
 \begin{go}
 filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
     fmt.Println(path)
     return nil 
 })
 \end{go}
+\vspace{0.7cm}
 The function passed to Walk is called for every file and folder in the root folder (in this case ".")   
 \section{Errors}
-package name $\rightarrow$ errors\\\\
+package name $\rightarrow$ errors
 \begin{go}
 err := errors.New("This is an error message")
 \end{go}   
@@ -721,7 +762,7 @@ err := errors.New("This is an error message")
 \item List $\rightarrow$ package name $\rightarrow$ container/list $\rightarrow$ implementation of a doubly-linked list
 \item Sort $\rightarrow$ package name $\rightarrow$ sort $\rightarrow$ Functions for sorting arbitrary data. There are serveral predefined sorting functions (for slices of ints and floats)
 \end{itemize}
-The Sort function in sort takes a sort.Interface and sorts it. A sort.Interface requires 3 methods: Len, Less and Swap. Example of usage:\\\\
+The Sort function in sort takes a sort.Interface and sorts it. A sort.Interface requires 3 methods: Len, Less and Swap. Example of usage:
 \begin{go}
 package main
 
@@ -755,7 +796,7 @@ func main() {
 \section{Hashes and Cryptography}
 Just to remember that a hash function takes a set of data and reduces it to a smaller fixed size. Hash functions in Go are broken into two categories: cryptographic and non-cryptographic.\\\\
 
-Cryptographic hash functions are similar to their non-cryptographic counterparts, but they have the added property of being hard to reverse. Give the cryptographic hash of a set of data, it's extremely difficult to determine what made the hash. These kind of hashes are often used in security applications (one common cryptographic hash function is SHA-1).\\\\
+Cryptographic hash functions are similar to their non-cryptographic counterparts, but they have the added property of being hard to reverse. Give the cryptographic hash of a set of data, it's extremely difficult to determine what made the hash. These kind of hashes are often used in security applications (one common cryptographic hash function is SHA-1).
 \begin{go}
 import (
     "fmt"
@@ -774,7 +815,7 @@ func main() {
 \end{go}
 \section{Servers}
 Encodings needed are in package "encoding/"+ name, for example encoding/json\\\\
-Example of HTTP server setup and usage:\\\\
+Example of HTTP server setup and usage:
 \begin{go}
 package main
 
@@ -803,7 +844,8 @@ func main() {
     http.ListenAndServe(":9000", nil)
 }
 \end{go}
-To handle static files we can use FileServer:\\\\
+\vspace{0.7cm}
+To handle static files we can use FileServer:
 \begin{go}
 http.Handle(
     "/assets/",
