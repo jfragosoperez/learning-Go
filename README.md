@@ -17,6 +17,7 @@ https://groups.google.com/forum/#!forum/golang-nuts
 ##Commands
 
 **PATH**
+	
 	export GOPATH=path_to_the_workspace
 
 	export PATH=$PATH:$GOPATH/bin
