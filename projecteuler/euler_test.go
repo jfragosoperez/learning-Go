@@ -1,9 +1,6 @@
 package projecteuler
 
-import(
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestFindMultiples(t *testing.T) {
 	const inMultipleOf, inUpTo, upperBoundForcingEmptyList = 5, 50, 1
@@ -11,7 +8,6 @@ func TestFindMultiples(t *testing.T) {
 	result := FindMultiples(inMultipleOf, inUpTo)
 	//non multiple-list
 	for i := 0; i < len(result); i++ {
-		fmt.Println(result[i])
 		if result[i] != outMultiples[i] {
 			t.Errorf("Multiple list of %v upTo %v is %v", inMultipleOf, inUpTo, outMultiples)
 			break
