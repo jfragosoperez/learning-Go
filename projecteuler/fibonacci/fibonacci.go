@@ -26,5 +26,5 @@ func fibonacciRecursive(nthTerm uint32)(nthThermValue uint32) {
 func fibonacciBinet(nthTerm uint32)(nthTermValue uint32) {
 	squareRootOfFive := math.Sqrt(5)
 	phi := (1 + squareRootOfFive) / 2
-    return uint32(int(((math.Pow(phi,float64(nthTerm)) - math.Pow((1-phi),float64(nthTerm)))/squareRootOfFive))) 
+	return uint32(int(((math.Pow(phi,float64(nthTerm)) - math.Pow((1-phi),float64(nthTerm)))/squareRootOfFive))) 
 }
