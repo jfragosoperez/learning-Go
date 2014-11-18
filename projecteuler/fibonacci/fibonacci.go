@@ -8,6 +8,31 @@ func Fibonacci(nthTerm uint32)(nthThermValue uint32) {
 	return fibonacciBinet(nthTerm)
 }
 
+//Returns the Fibonacci Sequence till the nthTerm.
+func FibonacciSequence(nthTerm uint32)(sequenceTillNthTherm []uint32){
+	sequence := []uint32{}
+	//if nth = 0 -> return []
+	if nthTerm == 0 {
+		return sequence
+	} 
+	//add first element
+	sequence = append(sequence, 1)
+	//return [1] or [1,1] in case of nthTerm is 1 or two
+	if(nthTerm == 1 || nthTerm == 2){
+		if nthTerm == 2 { 
+			sequence = append(sequence, 1)
+		} 
+		return sequence
+	}
+	sequence = append(sequence, 1)
+	//case nth > 2
+	for ith := 3;  ith <= int(nthTerm); ith++ {
+		//seq[(ith-1)-1] + seq[(ith-2)-1]
+		sequence = append(sequence, sequence[ith-2] + sequence[ith-3])
+	}
+	return sequence
+}
+
 //Fibonacci recursive
 func fibonacciRecursive(nthTerm uint32)(nthThermValue uint32) {
 	if nthTerm == 0 {
