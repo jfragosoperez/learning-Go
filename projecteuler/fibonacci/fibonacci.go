@@ -20,11 +20,13 @@ func fibonacciRecursive(nthTerm uint32)(nthThermValue uint32) {
 
 //Binet's formula appeared from the question: Can we find a formula for F(n) which involves 
 //only n and does not need any other (earlier) Fibonacci values?
-//now it fails for some values because GoLang truncates (discards the fraction) instead of rounding
-//implementation: https://code.google.com/p/go/issues/detail?id=3804
+//we have to math.Floor the value summing 0.5 before casting to int, because 
+//GoLang truncates (discards the fraction) instead of rounding
+//https://code.google.com/p/go/issues/detail?id=3804
 //https://groups.google.com/forum/#!topic/golang-nuts/n2DlRmMlGJ0
 func fibonacciBinet(nthTerm uint32)(nthTermValue uint32) {
 	squareRootOfFive := math.Sqrt(5)
 	phi := (1 + squareRootOfFive) / 2
-	return uint32(int(((math.Pow(phi,float64(nthTerm)) - math.Pow((1-phi),float64(nthTerm)))/squareRootOfFive))) 
+	return uint32(math.Floor(
+		((math.Pow(phi,float64(nthTerm)) - math.Pow((1-phi),float64(nthTerm)))/squareRootOfFive)+0.5)) 
 }
