@@ -5,7 +5,7 @@ import "math"
 
 //Fibonacci calculates the value for the nth term of the fib. sequence.
 func Fibonacci(nthTerm uint32)(nthThermValue uint32) {
-	return fibonacciRecursive(nthTerm)
+	return fibonacciBinet(nthTerm)
 }
 
 //Fibonacci recursive
