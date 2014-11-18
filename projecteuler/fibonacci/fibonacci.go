@@ -8,7 +8,7 @@ func Fibonacci(nthTerm uint32)(nthThermValue uint32) {
 	return fibonacciBinet(nthTerm)
 }
 
-//Returns the Fibonacci Sequence till the nthTerm.
+//Returns the Fibonacci Sequence values up to the nthTerm.
 func FibonacciSequence(nthTerm uint32)(sequenceTillNthTherm []uint32){
 	sequence := []uint32{}
 	//if nth = 0 -> return []
