@@ -8,25 +8,25 @@ func Fibonacci(nthTerm uint32)(nthThermValue uint32) {
 	return fibonacciBinet(nthTerm)
 }
 
-//Returns the Fibonacci Sequence values up to the nthTerm.
+//Returns the Fibonacci Sequence values up to theg nthTerm.
 func FibonacciSequence(nthTerm uint32)(sequenceTillNthTherm []uint32){
 	sequence := []uint32{}
-	//if nth = 0 -> return []
-	if nthTerm == 0 {
+	
+	if nthTerm == 0 { //if nth = 0 -> return []
 		return sequence
 	} 
 	//add first element
 	sequence = append(sequence, 1)
-	//return [1] or [1,1] in case of nthTerm is 1 or two
-	if(nthTerm == 1 || nthTerm == 2){
-		if nthTerm == 2 { 
+
+	if(nthTerm == 1 || nthTerm == 2){ //return [1] or [1,1] in case of nthTerm is 1 or two
+		if nthTerm == 2 { // add one more el, in case of 2nd therm
 			sequence = append(sequence, 1)
 		} 
 		return sequence
 	}
 	sequence = append(sequence, 1)
-	//case nth > 2
-	for ith := 3;  ith <= int(nthTerm); ith++ {
+	
+	for ith := 3;  ith <= int(nthTerm); ith++ { //case nth > 2
 		//seq[(ith-1)-1] + seq[(ith-2)-1]
 		sequence = append(sequence, sequence[ith-2] + sequence[ith-3])
 	}
