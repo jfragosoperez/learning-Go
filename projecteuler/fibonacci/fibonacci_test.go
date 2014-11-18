@@ -43,3 +43,32 @@ func testNthTermShouldBe(nthTerm, expectedValue uint32, t *testing.T) {
 			"but the result is %v", nthTerm, expectedValue, result)
 	}
 }
+
+// TO RUN BENCHMARKS -> go test -bench . -> executes all benchmarks
+
+func BenchmarkFiboIterative(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+    	FibonacciIterative(uint32(i))
+    }
+}
+
+func BenchmarkFiboBinet(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+    	FibonacciBinet(uint32(i))
+    }
+}
+
+func BenchmarkFiboSequence(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+    	FibonacciSequence(uint32(i))
+    }
+}
+
+func BenchmarkFiboRecursive(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+    	FibonacciRecursive(uint32(i))
+    }
+}
+
+
+
