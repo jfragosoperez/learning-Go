@@ -55,6 +55,19 @@ type skipListOps interface{
 	IsEmpty() bool
 }
 
+// when we insert a new node, we have to calculate the level of replication
+// of this node in upper level lists
+func (skipList *SkipList) calculateInsertionReplicationLevel()int {
+	numberOfLevels := 0
+	for {
+		if !skipList.decisionCoin.flip().isTails() {
+			numberOfLevels++
+		}
+		break
+	}
+	return numberOfLevels
+}
+
 // Adds desired element, if was not inserted into the skip list. 
 // returns true if the element is in the list.
 func (skipList *SkipList) Add(value interface{}) bool{
@@ -105,7 +118,7 @@ type skipListNode struct{
 // to next levels once we add a new element.
 type coin struct { }
 
-func flip(c coin)coinResult{
+func(c coin) flip() coinResult{
 	if randomValue := random(0,1); randomValue < 0.5 {
 		return TAILS
 	} else {
@@ -127,10 +140,10 @@ const(
 	TAILS
 )
 
-func isTails(result coinResult)bool {
+func (result coinResult) isTails() bool {
 	return result == TAILS 
 }
 
-func isHeads(result coinResult)bool {
+func (result coinResult) isHeads() bool {
 	return result == HEADS
 }
