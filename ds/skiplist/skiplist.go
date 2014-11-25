@@ -113,18 +113,6 @@ func (skipList *SkipList) Add(value interface{}) (v interface{}, ok bool){
 	return value, true
 }
 
-// Adds all the elements into the skip list.
-// returns true if the elements are now in the list.
-func (skipList *SkipList) AddAll(values []interface{}) bool{
-	if values == nil {
-		panic("addAll: cannot insert nil elements")
-	}
-	for _, value := range values {
-		skipList.Add(value)
-	}
-	return true
-}
-
 // Removes the element of the skip list.
 // returns true if the value has been removed from the list, false 
 // if the element was not contained in the list.
@@ -137,6 +125,9 @@ func(skipList *SkipList) Remove(value interface{}) (v interface{}, ok bool){
 
 // Searches the desired value and returns true if is contained in the list.
 func(skipList *SkipList) HasElement(value interface{}) bool{
+	if value == nil {
+		panic("cannot search nil elements")
+	}
 	return true
 }
 
