@@ -23,6 +23,10 @@ func TestAdd(t *testing.T){
     newSkipList.Add(2)
 }
 
+func TestRemove(t *testing.T){
+	
+}
+
 func TestAddNil(t *testing.T){
 	newSkipList := NewIntSkipList(NON_DICREASING, 32)
 
@@ -57,10 +61,6 @@ func TestRemoveNil(t *testing.T){
     }()
 
     newSkipList.Remove(nil)
-}
-
-func TestRemove(t *testing.T){
-	
 }
 
 func BenchmarkSkipList(b *testing.B){

@@ -35,7 +35,7 @@ import (
 //A Skip List is composed of skip list nodes
 type skipListNode struct{
 	right []*skipListNode
-	key, value interface{}
+	value interface{}
 }
 
 //to know if one node has one next
@@ -51,10 +51,20 @@ func (node *skipListNode) next() *skipListNode {
 	return node.right[0]
 }
 
+type compareResult int
+
+const(
+	//case equal (onEl == otherEl)
+	EQUAL compareResult = 1 + iota
+	//case we need to go on (in non-dicreasing list will be when onEl < otherEl)
+	TRUE
+	//case we have passed (in non-dicreasing list will be when onEl > otherEl)
+	FALSE
+)
 
 //Skip List
 type SkipList struct{
-	compare func(oneEl, otherEl interface{}) bool
+	compare func(oneEl, otherEl interface{}) compareResult
 	decisionCoin coin  
 	length int
 	head *skipListNode
@@ -73,16 +83,20 @@ const(
 const DefaultMaxLevel = 28
 
 func NewIntSkipList(order Order, maxLevel int) *SkipList {
-	return newSkipList(func(oneEl, otherEl interface{}) bool {
-		if(order == NON_DICREASING){
-			return oneEl.(int) < otherEl.(int)
+	return newSkipList(func(oneEl, otherEl interface{}) compareResult {
+		if oneEl.(int) == otherEl.(int) {
+			return EQUAL
+		}
+		if (order == NON_DICREASING && oneEl.(int) < otherEl.(int)) || 
+			(order == DICREASING && oneEl.(int) > otherEl.(int)) {
+			return TRUE
 		} else {
-			return oneEl.(int) > otherEl.(int)
+			return FALSE
 		}
 	}, maxLevel)
 }
 
-func newSkipList(compare func(oneEl, otherEl interface{}) bool, maxLevel int) *SkipList {
+func newSkipList(compare func(oneEl, otherEl interface{}) compareResult, maxLevel int) *SkipList {
 	return &SkipList{
 		compare: compare,
 		head: &skipListNode{
@@ -128,7 +142,19 @@ func(skipList *SkipList) HasElement(value interface{}) bool{
 	if value == nil {
 		panic("cannot search nil elements")
 	}
-	return true
+
+	current := skipList.head
+	depth := len(current.right) - 1
+
+	for i := depth; i >= 0; i-- {
+		for current.right[i] != nil && (skipList.compare(current.right[i].value, value) == TRUE) {
+			current = current.right[i]
+		}
+		if current.right[i] != nil && (skipList.compare(current.right[i].value, value) == EQUAL) {
+			return true
+		}
+	}
+	return false
 }
 
 // Returns the number of elements contained in the list.
