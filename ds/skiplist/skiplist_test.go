@@ -9,7 +9,7 @@ import(
 )
 
 func TestNewSkipList(t *testing.T){
-	newSkipList := New()
+	newSkipList := NewIntSkipList(NON_DICREASING, 32)
 	if newSkipList.Len() != 0 {
 		t.Errorf("A new skip list should contain 0 elements")
 	}

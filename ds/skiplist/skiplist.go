@@ -3,7 +3,7 @@
 // Skip list data structure.
 //
 // Skip lists use a probabilistic approach in order to perform
-// search/insert/removal operations in O(logn), and outperform
+// search/insert/removal operations in O(lgn), and outperform
 // better than several balanced trees.
 
 // Running time:
@@ -32,17 +32,64 @@ import (
 	"math/rand"
 )
 
+//A Skip List is composed of skip list nodes
+type skipListNode struct{
+	right []*skipListNode
+	key, value interface{}
+}
+
+//to know if one node has one next
+func (node *skipListNode) hasNext() bool {
+	return len(node.right) == 0 
+}
+
+// next node in the skip 
+func (node *skipListNode) next() *skipListNode {
+	if node.hasNext() {
+		return nil
+	}
+	return node.right[0]
+}
 
 
 //Skip List
 type SkipList struct{
-	decisionCoin coin 
-	numberOfLevels, numberOfElements int 
+	compare func(oneEl, otherEl interface{}) bool
+	decisionCoin coin  
+	length int
 	head *skipListNode
+	maxLevel int
 }
 
-func New() *SkipList {
-	return new(SkipList)
+//the order in which the elements need to be sorted.
+type Order int
+
+const(
+	NON_DICREASING Order = 1 + iota 
+	DICREASING
+)
+
+//default max level of the skip list
+const DefaultMaxLevel = 28
+
+func NewIntSkipList(order Order, maxLevel int) *SkipList {
+	return newSkipList(func(oneEl, otherEl interface{}) bool {
+		if(order == NON_DICREASING){
+			return oneEl.(int) < otherEl.(int)
+		} else {
+			return oneEl.(int) > otherEl.(int)
+		}
+	}, maxLevel)
+}
+
+func newSkipList(compare func(oneEl, otherEl interface{}) bool, maxLevel int) *SkipList {
+	return &SkipList{
+		compare: compare,
+		head: &skipListNode{
+			right: []*skipListNode{nil},
+		},
+		maxLevel: maxLevel,
+	}
 }
 
 // List of operations supported by a skip list
@@ -53,38 +100,39 @@ type skipListOps interface{
 	HasElement(value interface{}) bool
 	Len() int
 	IsEmpty() bool
-}
-
-// when we insert a new node, we have to calculate the level of replication
-// of this node in upper level lists
-func (skipList *SkipList) calculateInsertionReplicationLevel()int {
-	numberOfLevels := 0
-	for {
-		if !skipList.decisionCoin.flip().isTails() {
-			numberOfLevels++
-		}
-		break
-	}
-	return numberOfLevels
+	GetMaxLevel() int
 }
 
 // Adds desired element, if was not inserted into the skip list. 
-// returns true if the element is in the list.
-func (skipList *SkipList) Add(value interface{}) bool{
-	return true
+// returns the value inserted and a confirmation to know that the value 
+// has been inserted correctly.
+func (skipList *SkipList) Add(value interface{}) (v interface{}, ok bool){
+	if value == nil {
+		panic("cannot insert nil elements")
+	}
+	return value, true
 }
 
 // Adds all the elements into the skip list.
 // returns true if the elements are now in the list.
 func (skipList *SkipList) AddAll(values []interface{}) bool{
+	if values == nil {
+		panic("addAll: cannot insert nil elements")
+	}
+	for _, value := range values {
+		skipList.Add(value)
+	}
 	return true
 }
 
-// Removes the desired element of the skip list.
+// Removes the element of the skip list.
 // returns true if the value has been removed from the list, false 
 // if the element was not contained in the list.
-func(skipList *SkipList) Remove(value interface{}) bool{
-	return true
+func(skipList *SkipList) Remove(value interface{}) (v interface{}, ok bool){
+	if value == nil {
+		panic("cannot remove nil elements")
+	}
+	return value, true
 }
 
 // Searches the desired value and returns true if is contained in the list.
@@ -97,22 +145,32 @@ func(skipList *SkipList) HasElement(value interface{}) bool{
 // of nodes that contains all the values, so it does not take into
 // account the replicated elements in other levels of the list.
 func(skipList *SkipList) Len() int{
-	return skipList.numberOfElements
+	return skipList.length
 }
 
 // Describes if the skip list is empty.
 func(skipList *SkipList) IsEmpty() bool{
-	return skipList.head == nil
+	return skipList.Len() == 0
 }
 
-//A Skip List is composed of skip list nodes
-type skipListNode struct{
-	right *skipListNode
-	below *skipListNode
-	data interface{}
+// returns the max level of the list
+func(skipList *SkipList) GetMaxLevel() int{
+	return skipList.maxLevel
 }
 
-
+// when we insert a new node, we have to calculate the level of replication
+// of this node in upper level lists
+func (skipList *SkipList) calculateInsertionReplicationLevel()int {
+	numberOfLevels := 0
+	for {
+		if !skipList.decisionCoin.flip().isTails() {
+			numberOfLevels++
+		}else {
+			break
+		}	
+	}
+	return numberOfLevels
+}
 
 // This coin will be used to make the decision of replicating nodes
 // to next levels once we add a new element.
@@ -129,8 +187,6 @@ func(c coin) flip() coinResult{
 func random(min, max float64) float64 {
   return rand.Float64() * (max - min) + min
 }
-
-
 
 //Coin Result is the result we get from flipping a coin
 type coinResult int
