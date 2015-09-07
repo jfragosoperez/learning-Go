@@ -52,6 +52,10 @@ These list is copied from: https://golang.org/cmd/go/
 
 	go help [command]	
 
+**Stringer**
+
+	[Stringer tool](https://godoc.org/golang.org/x/tools/cmd/stringer)	
+
 
 ## Basics of Go
 
