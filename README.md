@@ -54,7 +54,7 @@ These list is copied from: https://golang.org/cmd/go/
 
 **Stringer**
 
-	[Stringer tool](https://godoc.org/golang.org/x/tools/cmd/stringer)	
+	https://godoc.org/golang.org/x/tools/cmd/stringer	
 
 
 ## Basics of Go
